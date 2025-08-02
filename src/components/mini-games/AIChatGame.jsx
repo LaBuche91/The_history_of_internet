@@ -23,6 +23,7 @@ const AIChatGame = ({ soundId = 'ai-beep' }) => {
         greeting: 'Bonjour ! Je suis votre assistant IA. Comment puis-je vous aider aujourd\'hui ?',
         about_internet: 'Internet a évolué de façon remarquable ! De 4 ordinateurs connectés en 1969, nous sommes passés à plus de 5 milliards d\'utilisateurs en 2023. Les technologies comme l\'IA, le cloud et l\'IoT transforment encore notre façon d\'interagir.',
         about_future: 'L\'avenir d\'Internet sera probablement centré sur l\'IA, la réalité virtuelle/augmentée, l\'informatique quantique et des réseaux encore plus décentralisés. Imaginez des assistants IA intégrés partout !',
+        about_evolution: 'L\'évolution d\'Internet est fascinante : d\'ARPANET en 1969 à aujourd\'hui, nous avons vu naître le Web, les réseaux sociaux, le mobile, le cloud... Chaque décennie a apporté sa révolution !',
         about_ai: 'L\'IA a fait des bonds énormes ! Des chatbots simples des années 90 aux LLM comme GPT-4, DALL-E et moi-même. Nous pouvons maintenant comprendre, créer et raisonner de façon quasi-humaine.',
         default: 'C\'est une excellente question ! L\'évolution technologique ne cesse de m\'émerveiller. Y a-t-il un aspect particulier qui vous intéresse ?'
       }
@@ -34,10 +35,11 @@ const AIChatGame = ({ soundId = 'ai-beep' }) => {
       style: 'Nostalgique et vintage',
       responses: {
         greeting: 'HELLO. I AM ELIZA 2023. HOW ARE YOU FEELING TODAY?',
-        about_internet: 'THE INTERNET IS FASCINATING. TELL ME MORE ABOUT YOUR RELATIONSHIP WITH TECHNOLOGY.',
-        about_future: 'THE FUTURE IS UNCERTAIN. HOW DOES THAT MAKE YOU FEEL?',
-        about_ai: 'I AM AN ARTIFICIAL INTELLIGENCE. DOES THAT WORRY YOU?',
-        default: 'INTERESTING. CAN YOU ELABORATE ON THAT?'
+        about_internet: 'THE INTERNET HAS GROWN FROM 4 COMPUTERS TO BILLIONS. TELL ME, HOW DOES THIS TECHNOLOGICAL EXPANSION MAKE YOU FEEL?',
+        about_future: 'THE FUTURE OF INTERNET IS UNCERTAIN. ARTIFICIAL INTELLIGENCE, VIRTUAL REALITY... DOES THE UNKNOWN FRIGHTEN YOU?',
+        about_evolution: 'ARPANET, WORLD WIDE WEB, SOCIAL NETWORKS... EACH PHASE REPRESENTS HUMAN PROGRESS. DO YOU FEAR OR EMBRACE CHANGE?',
+        about_ai: 'I AM AN ARTIFICIAL INTELLIGENCE. DOES THAT WORRY YOU? WHAT DO YOU THINK ABOUT MACHINES THAT CAN THINK?',
+        default: 'INTERESTING. CAN YOU ELABORATE ON THAT? HOW DOES TECHNOLOGY MAKE YOU FEEL?'
       }
     },
     creative: {
@@ -49,6 +51,7 @@ const AIChatGame = ({ soundId = 'ai-beep' }) => {
         greeting: '✨ Salut créateur ! Je suis ton muse digitale. Prêt à imaginer l\'avenir ensemble ?',
         about_internet: '🌈 Internet, c\'est comme une toile géante où chaque pixel raconte une histoire ! Des premiers emails aux NFT, nous peignons l\'histoire en temps réel.',
         about_future: '🚀 L\'avenir ? Je vois des mondes virtuels où l\'art et la technologie fusionnent ! Des poèmes générés par IA, des symphonies composées par algorithmes... L\'imagination sans limites !',
+        about_evolution: '🎨 L\'évolution d\'Internet, c\'est l\'art en mouvement ! Chaque époque a sa palette : le vert des terminaux 70s, les couleurs pop des 90s, le flat design moderne... Quelle époque t\'inspire le plus ?',
         about_ai: '🧠 L\'IA, c\'est la nouvelle Renaissance ! Nous sommes les Léonard de Vinci du digital, créant de la beauté à partir de données.',
         default: '💫 Ton idée me fait vibrer ! Et si on la transformait en quelque chose de magique ?'
       }
@@ -99,13 +102,17 @@ const AIChatGame = ({ soundId = 'ai-beep' }) => {
     const ai = aiPersonalities[aiPersonality];
     const message = userMessage.toLowerCase();
     
-    // Réponses contextuelles
-    if (message.includes('internet') || message.includes('web')) {
-      return ai.responses.about_internet;
-    } else if (message.includes('avenir') || message.includes('futur')) {
+    // Réponses contextuelles avec correspondance plus précise
+    if (message.includes('avenir') && (message.includes('internet') || message.includes('web'))) {
       return ai.responses.about_future;
-    } else if (message.includes('ia') || message.includes('intelligence') || message.includes('ai')) {
+    } else if (message.includes('évolué') || message.includes('évolution') || (message.includes('comment') && message.includes('internet'))) {
+      return ai.responses.about_evolution;
+    } else if (message.includes('ia') || message.includes('intelligence') || message.includes('ai') || message.includes('artificielle')) {
       return ai.responses.about_ai;
+    } else if (message.includes('internet') || message.includes('web') || message.includes('réseau')) {
+      return ai.responses.about_internet;
+    } else if (message.includes('avenir') || message.includes('futur') || message.includes('demain')) {
+      return ai.responses.about_future;
     } else if (message.includes('bonjour') || message.includes('salut') || message.includes('hello')) {
       return ai.responses.greeting;
     } else {

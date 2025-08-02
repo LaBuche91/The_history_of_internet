@@ -4,7 +4,7 @@
   "description": "Expérience web interactive retraçant l’évolution d’Internet.",
   "main": "src/index.jsx",
   "scripts": {
-    "start": "vite --host",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },

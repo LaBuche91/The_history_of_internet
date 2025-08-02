@@ -31,6 +31,47 @@ body {
   position: relative;
 }
 
+/* Styles pour la section héro */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #000 0%, #1a1a1a 50%, #333 100%);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 8vw, 6rem);
+  font-weight: bold;
+  margin-bottom: 2rem;
+  background: linear-gradient(45deg, var(--retro-green), var(--retro-amber));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 4rem;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--retro-green);
+  text-align: center;
+  animation: bounce 2s infinite;
+}
+
 /* Styles pour la timeline */
 .timeline {
   position: relative;
@@ -130,6 +171,22 @@ body {
     linear-gradient(135deg, #008080 0%, #004040 100%);
   background-size: 60px 60px, 60px 60px, 60px 60px, 60px 60px, 100% 100%;
   background-position: 0 0, 0 30px, 30px -30px, -30px 0px, 0 0;
+}
+
+.event-1991 .event-title,
+.event-1995 .event-title,
+.event-1998 .event-title,
+.event-1999 .event-title {
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.event-1991 .event-description,
+.event-1995 .event-description,
+.event-1998 .event-description,
+.event-1999 .event-description {
+  color: #f0f0f0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .event-1991 .event-interactive,

@@ -43,54 +43,6 @@ function App() {
 
   return (
     <div ref={appRef} className="app">
-      {/* Section héro */}
-      <section style={{
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'linear-gradient(45deg, #000 0%, #1a1a1a 50%, #333 100%)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <h1 style={{
-          fontSize: 'clamp(2rem, 8vw, 6rem)',
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginBottom: '2rem',
-          background: 'linear-gradient(45deg, #00ff00, #ffb000)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }}>
-          The History of the Internet
-        </h1>
-        
-        <p style={{
-          fontSize: '1.2rem',
-          textAlign: 'center',
-          color: '#ccc',
-          maxWidth: '600px',
-          lineHeight: '1.6'
-        }}>
-          Embarquez pour un voyage interactif à travers les moments 
-          qui ont façonné notre monde numérique. Des premiers pas 
-          d'ARPANET aux réseaux sociaux modernes.
-        </p>
-        
-        <div style={{
-          position: 'absolute',
-          bottom: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          color: '#00ff00',
-          fontSize: '2rem',
-          animation: 'blink 2s infinite'
-        }}>
-          ↓
-        </div>
-      </section>
 
       {/* Chargement conditionnel des composants */}
       {componentsLoaded && (

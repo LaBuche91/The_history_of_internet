@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
-const VirusDefenseGame = ({ soundId = 'alert-sound' }) => {
+function VirusDefenseGame({ soundId = 'alert-sound' }) {
   const [gameActive, setGameActive] = useState(false);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
@@ -15,6 +15,7 @@ const VirusDefenseGame = ({ soundId = 'alert-sound' }) => {
   const gameTimerRef = useRef(null);
   const threatCounterRef = useRef(0);
   const spawnTimerRef = useRef(null);
+  const gameActiveRef = useRef(false);
 
   const threatTypes = [
     {
@@ -77,6 +78,7 @@ const VirusDefenseGame = ({ soundId = 'alert-sound' }) => {
     if (gameActive) return;
     
     setGameActive(true);
+    gameActiveRef.current = true;
     setGameOver(false);
     setScore(0);
     setLives(3);
@@ -107,16 +109,22 @@ const VirusDefenseGame = ({ soundId = 'alert-sound' }) => {
 
   const startThreatSpawning = () => {
     const spawnThreat = () => {
-      if (!gameActive) return;
+      if (!gameActiveRef.current) return;
       
       const threatTemplate = threatTypes[Math.floor(Math.random() * threatTypes.length)];
       const id = ++threatCounterRef.current;
       
+      const gameArea = gameAreaRef.current;
+      if (!gameArea) return;
+      
+      const maxX = Math.max(0, gameArea.offsetWidth - 300);
+      const maxY = Math.max(0, gameArea.offsetHeight - 200);
+      
       const newThreat = {
         id,
         ...threatTemplate,
-        x: Math.random() * (gameAreaRef.current?.offsetWidth - 300 || 400),
-        y: Math.random() * (gameAreaRef.current?.offsetHeight - 200 || 300),
+        x: Math.random() * maxX,
+        y: Math.random() * maxY,
         zIndex: 100 + id,
         createdAt: Date.now()
       };
@@ -145,21 +153,25 @@ const VirusDefenseGame = ({ soundId = 'alert-sound' }) => {
       
       // Auto-dommage après 5 secondes si pas fermé
       setTimeout(() => {
-        setThreats(current => {
-          const threat = current.find(t => t.id === id);
-          if (threat) {
-            takeDamage(threat.damage);
-            return current.filter(t => t.id !== id);
-          }
-          return current;
-        });
+        if (gameActiveRef.current) {
+          setThreats(current => {
+            const threat = current.find(t => t.id === id);
+            if (threat) {
+              takeDamage(threat.damage);
+              return current.filter(t => t.id !== id);
+            }
+            return current;
+          });
+        }
       }, 5000);
       
       // Programmer la prochaine menace
-      if (gameActive) {
-        const delay = Math.max(500, 3000 - (threatCounterRef.current * 50)); // Accélération progressive
-        spawnTimerRef.current = setTimeout(spawnThreat, delay);
-      }
+      const delay = Math.max(500, 3000 - (threatCounterRef.current * 50)); // Accélération progressive
+      setTimeout(() => {
+        if (gameActiveRef.current) { // Vérifier à nouveau l'état du jeu
+          spawnThreat();
+        }
+      }, delay);
     };
     
     spawnThreat();
@@ -255,20 +267,26 @@ const VirusDefenseGame = ({ soundId = 'alert-sound' }) => {
 
   const endGame = () => {
     setGameActive(false);
+    gameActiveRef.current = false;
     setGameOver(true);
+    setThreats([]); // Supprimer toutes les menaces
     
     if (gameTimerRef.current) {
       clearInterval(gameTimerRef.current);
+      gameTimerRef.current = null;
     }
     if (spawnTimerRef.current) {
       clearTimeout(spawnTimerRef.current);
+      spawnTimerRef.current = null;
     }
     
     // Animation de fin
-    gsap.to(gameAreaRef.current, {
-      filter: 'sepia(100%) contrast(200%)',
-      duration: 1
-    });
+    if (gameAreaRef.current) {
+      gsap.to(gameAreaRef.current, {
+        filter: 'sepia(100%) contrast(200%)',
+        duration: 1
+      });
+    }
   };
 
   const resetGame = () => {

@@ -7,6 +7,7 @@ const SocialMediaDashboard = ({ soundId = 'notification' }) => {
   const [notifications, setNotifications] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedApp, setSelectedApp] = useState(null);
+  const [showWelcome, setShowWelcome] = useState(true);
   
   const dashboardRef = useRef(null);
   const notificationCounterRef = useRef(0);
@@ -98,6 +99,7 @@ const SocialMediaDashboard = ({ soundId = 'notification' }) => {
   const openApp = (app) => {
     if (activeApps.find(a => a.id === app.id)) return;
     
+    setShowWelcome(false); // Cacher le message de bienvenue
     setActiveApps(prev => [...prev, app]);
     setSelectedApp(app);
     
@@ -507,8 +509,8 @@ const SocialMediaDashboard = ({ soundId = 'notification' }) => {
           </div>
         ))}
 
-        {/* Message d'aide */}
-        {activeApps.length === 0 && (
+        {/* Message d'aide - seulement au début */}
+        {showWelcome && (
           <div style={{
             position: 'absolute',
             top: '50%',
@@ -516,13 +518,32 @@ const SocialMediaDashboard = ({ soundId = 'notification' }) => {
             transform: 'translate(-50%, -50%)',
             textAlign: 'center',
             color: 'rgba(255, 255, 255, 0.8)',
-            fontSize: '1.1rem'
+            fontSize: '1.1rem',
+            background: 'rgba(0, 0, 0, 0.7)',
+            padding: '2rem',
+            borderRadius: '12px',
+            border: '2px solid rgba(255, 255, 255, 0.3)'
           }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🌐</div>
             <div>Cliquez sur les icônes pour explorer les réseaux sociaux</div>
             <div style={{ fontSize: '0.9rem', marginTop: '0.5rem', opacity: 0.7 }}>
               Découvrez comment le Web 2.0 a transformé Internet !
             </div>
+            <button
+              onClick={() => setShowWelcome(false)}
+              style={{
+                marginTop: '1rem',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.4)',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '0.9rem'
+              }}
+            >
+              Commencer à explorer
+            </button>
           </div>
         )}
 

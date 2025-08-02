@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
-const PopupKillerGame = ({ soundId = 'windows-95' }) => {
+function PopupKillerGame({ soundId = 'windows-95' }) {
   const [gameActive, setGameActive] = useState(false);
   const [score, setScore] = useState(0);
   const [popups, setPopups] = useState([]);
@@ -12,6 +12,7 @@ const PopupKillerGame = ({ soundId = 'windows-95' }) => {
   const gameAreaRef = useRef(null);
   const gameTimerRef = useRef(null);
   const popupCounterRef = useRef(0);
+  const gameActiveRef = useRef(false);
 
   const popupTemplates = [
     {
@@ -56,6 +57,7 @@ const PopupKillerGame = ({ soundId = 'windows-95' }) => {
     if (gameActive) return;
     
     setGameActive(true);
+    gameActiveRef.current = true;
     setGameOver(false);
     setScore(0);
     setPopups([]);
@@ -78,21 +80,27 @@ const PopupKillerGame = ({ soundId = 'windows-95' }) => {
       });
     }, 1000);
 
-    // Spawn des popups
-    spawnPopup();
+    // Commencer à spawner les popups
+    setTimeout(() => spawnPopup(), 500);
   };
 
   const spawnPopup = () => {
-    if (!gameActive) return;
+    if (!gameActiveRef.current) return;
     
     const template = popupTemplates[Math.floor(Math.random() * popupTemplates.length)];
     const id = ++popupCounterRef.current;
     
+    const gameArea = gameAreaRef.current;
+    if (!gameArea) return;
+    
+    const maxX = Math.max(0, gameArea.offsetWidth - template.size.width);
+    const maxY = Math.max(0, gameArea.offsetHeight - template.size.height);
+    
     const newPopup = {
       id,
       ...template,
-      x: Math.random() * (gameAreaRef.current?.offsetWidth - template.size.width || 300),
-      y: Math.random() * (gameAreaRef.current?.offsetHeight - template.size.height || 200),
+      x: Math.random() * maxX,
+      y: Math.random() * maxY,
       zIndex: 100 + id
     };
     
@@ -110,9 +118,12 @@ const PopupKillerGame = ({ soundId = 'windows-95' }) => {
     }, 10);
     
     // Programmer le prochain popup
-    if (gameActive) {
-      setTimeout(() => spawnPopup(), Math.random() * 2000 + 1000); // 1-3 secondes
-    }
+    const nextSpawnDelay = Math.random() * 2000 + 1000; // 1-3 secondes
+    setTimeout(() => {
+      if (gameActiveRef.current) { // Vérifier à nouveau l'état du jeu
+        spawnPopup();
+      }
+    }, nextSpawnDelay);
   };
 
   const closePopup = (popupId) => {
@@ -140,6 +151,7 @@ const PopupKillerGame = ({ soundId = 'windows-95' }) => {
 
   const endGame = () => {
     setGameActive(false);
+    gameActiveRef.current = false;
     setGameOver(true);
     
     if (gameTimerRef.current) {
@@ -155,6 +167,7 @@ const PopupKillerGame = ({ soundId = 'windows-95' }) => {
 
   const resetGame = () => {
     setGameActive(false);
+    gameActiveRef.current = false;
     setGameOver(false);
     setScore(0);
     setPopups([]);
