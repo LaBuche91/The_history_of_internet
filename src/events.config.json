@@ -1,0 +1,194 @@
+[
+  {
+    "id": "arpanet-1969",
+    "year": 1969,
+    "title": "Naissance d'ARPANET",
+    "description": "Le 29 octobre 1969, le premier message est envoyé entre l'UCLA et Stanford. Ce simple 'LO' (tentative d'envoyer 'LOGIN') marque le début d'Internet.",
+    "type": "mini-game",
+    "decade": "1960s",
+    "media": {
+      "image": "arpanet-computers.png",
+      "sound": "retro-beep.mp3"
+    },
+    "interactivity": {
+      "type": "drag-drop",
+      "description": "Connectez les premiers ordinateurs du réseau"
+    }
+  },
+  {
+    "id": "tcp-ip-1983",
+    "year": 1983,
+    "title": "TCP/IP devient standard",
+    "description": "Le protocole TCP/IP devient la norme universelle, permettant aux différents réseaux de communiquer entre eux. C'est la naissance d'Internet tel qu'on le connaît.",
+    "type": "mini-game",
+    "decade": "1980s",
+    "media": {
+      "image": "tcp-ip-network.png",
+      "sound": "computer-beep.mp3"
+    },
+    "interactivity": {
+      "type": "ping-game",
+      "description": "Testez la connectivité entre machines avec la commande ping"
+    }
+  },
+  {
+    "id": "web-html-1991",
+    "year": 1991,
+    "title": "Naissance du Web (HTML)",
+    "description": "Tim Berners-Lee crée le World Wide Web au CERN. La première page web est mise en ligne, révolutionnant l'accès à l'information.",
+    "type": "mini-game",
+    "decade": "1990s",
+    "media": {
+      "image": "first-website.png",
+      "sound": "modem-connect.mp3"
+    },
+    "interactivity": {
+      "type": "html-display",
+      "description": "Découvrez la toute première page web"
+    }
+  },
+  {
+    "id": "internet-explorer-1995",
+    "year": 1995,
+    "title": "Internet Explorer",
+    "description": "Microsoft lance Internet Explorer, déclenchant les guerres des navigateurs. L'époque des pop-ups invasives commence !",
+    "type": "mini-game",
+    "decade": "1990s",
+    "media": {
+      "image": "ie-browser.png",
+      "sound": "windows-95.mp3"
+    },
+    "interactivity": {
+      "type": "popup-killer",
+      "description": "Fermez les pop-ups avant qu'elles envahissent votre écran !"
+    }
+  },
+  {
+    "id": "google-1998",
+    "year": 1998,
+    "title": "Google",
+    "description": "Larry Page et Sergey Brin lancent Google depuis leur garage. La recherche web ne sera plus jamais la même.",
+    "type": "mini-game",
+    "decade": "1990s",
+    "media": {
+      "image": "google-homepage.png",
+      "sound": "dial-up.mp3"
+    },
+    "interactivity": {
+      "type": "search-simulation",
+      "description": "Effectuez une recherche rétro avec des résultats vintage"
+    }
+  },
+  {
+    "id": "mp3-download-1999",
+    "year": 1999,
+    "title": "L'ère du téléchargement MP3",
+    "description": "Napster révolutionne le partage de musique. Revivez l'époque où télécharger un MP3 était une aventure de patience.",
+    "type": "mini-game",
+    "decade": "1990s",
+    "media": {
+      "image": "napster-interface.png",
+      "sound": "dialup-modem.mp3"
+    },
+    "interactivity": {
+      "type": "simulation",
+      "description": "Simulez un téléchargement MP3 avec tous ses aléas"
+    }
+  },
+  {
+    "id": "geocities-2000",
+    "year": 2000,
+    "title": "GeoCities et les sites personnels",
+    "description": "L'âge d'or des sites personnels avec GIFs animés, Comic Sans et compteurs de visiteurs. Créez votre propre chef-d'œuvre rétro !",
+    "type": "mini-game",
+    "decade": "2000s",
+    "media": {
+      "image": "geocities-site.png",
+      "sound": "midi-music.mp3"
+    },
+    "interactivity": {
+      "type": "website-builder",
+      "description": "Construisez votre site GeoCities avec tous les clichés de l'époque"
+    }
+  },
+  {
+    "id": "msn-messenger-2003",
+    "year": 2003,
+    "title": "MSN Messenger et les Nudges",
+    "description": "L'apogée de la messagerie instantanée avec les statuts personnalisés, émoticônes animées et les fameux nudges.",
+    "type": "mini-game",
+    "decade": "2000s",
+    "media": {
+      "image": "msn-messenger.png",
+      "sound": "msn-nudge.mp3"
+    },
+    "interactivity": {
+      "type": "chat-simulation",
+      "description": "Expérimentez le célèbre nudge MSN"
+    }
+  },
+  {
+    "id": "virus-pop-ups-2004",
+    "year": 2004,
+    "title": "L'invasion des virus et pop-ups",
+    "description": "L'internet sauvage des années 2000 : virus, spyware, et pop-ups à gogo. Survivez à cette époque dangereuse !",
+    "type": "mini-game",
+    "decade": "2000s",
+    "media": {
+      "image": "virus-alert.png",
+      "sound": "alert-sound.mp3"
+    },
+    "interactivity": {
+      "type": "virus-defense",
+      "description": "Évitez les virus et fermez les pop-ups malveillantes"
+    }
+  },
+  {
+    "id": "youtube-2005",
+    "year": 2005,
+    "title": "YouTube",
+    "description": "Chad Hurley, Steve Chen et Jawed Karim lancent YouTube. La première vidéo 'Me at the zoo' change à jamais notre façon de consommer du contenu.",
+    "type": "mini-game",
+    "decade": "2000s",
+    "media": {
+      "image": "youtube-player.png",
+      "sound": "youtube-intro.mp3"
+    },
+    "interactivity": {
+      "type": "video-player",
+      "description": "Regardez une vidéo vintage sur le premier YouTube"
+    }
+  },
+  {
+    "id": "web2-2010",
+    "year": 2010,
+    "title": "Web 2.0 et réseaux sociaux",
+    "description": "Facebook, Twitter, LinkedIn... Les réseaux sociaux transforment Internet en plateforme interactive. Bienvenue dans l'ère du partage !",
+    "type": "mini-game",
+    "decade": "2010s",
+    "media": {
+      "image": "social-media.png",
+      "sound": "notification.mp3"
+    },
+    "interactivity": {
+      "type": "social-dashboard",
+      "description": "Explorez les icônes des réseaux sociaux de l'époque"
+    }
+  },
+  {
+    "id": "cloud-ai-2020",
+    "year": 2020,
+    "title": "Cloud et Intelligence Artificielle",
+    "description": "L'avènement du cloud computing et de l'IA grand public. ChatGPT, services cloud... l'internet devient intelligent !",
+    "type": "mini-game",
+    "decade": "2020s",
+    "media": {
+      "image": "ai-cloud.png",
+      "sound": "ai-beep.mp3"
+    },
+    "interactivity": {
+      "type": "ai-chat",
+      "description": "Discutez avec une IA et découvrez le futur d'Internet"
+    }
+  }
+]
