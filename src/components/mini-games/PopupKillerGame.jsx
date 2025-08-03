@@ -1,8 +1,7 @@
-// PopupKillerGame.jsx - Mini-jeu de fermeture de pop-ups
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
+// PopupKillerGameNew.jsx - Version simplifiée du jeu popup killer
+import React, { useState, useRef, useEffect } from 'react';
 
-function PopupKillerGame({ soundId = 'windows-95' }) {
+function PopupKillerGameNew({ soundId = 'windows-95' }) {
   const [gameActive, setGameActive] = useState(false);
   const [score, setScore] = useState(0);
   const [popups, setPopups] = useState([]);
@@ -10,65 +9,43 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
   const [gameOver, setGameOver] = useState(false);
   
   const gameAreaRef = useRef(null);
-  const gameTimerRef = useRef(null);
   const popupCounterRef = useRef(0);
-  const gameActiveRef = useRef(false);
+  const gameTimerRef = useRef(null);
+  const spawnTimerRef = useRef(null);
 
   const popupTemplates = [
     {
       title: "FÉLICITATIONS!!!",
       content: "Vous êtes le 1 000 000ème visiteur !",
       color: "#ff0000",
-      size: { width: 300, height: 200 }
+      width: 300,
+      height: 200
     },
     {
       title: "VIRUS DÉTECTÉ",
-      content: "Votre ordinateur est infecté ! Cliquez ici pour nettoyer",
+      content: "Votre ordinateur est infecté !",
       color: "#ffff00",
-      size: { width: 350, height: 180 }
+      width: 350,
+      height: 180
     },
     {
       title: "Crédit Gratuit",
       content: "Obtenez 1000€ MAINTENANT !",
       color: "#00ff00",
-      size: { width: 280, height: 160 }
-    },
-    {
-      title: "Chat en ligne",
-      content: "Des célibataires près de chez vous !",
-      color: "#ff69b4",
-      size: { width: 320, height: 190 }
-    },
-    {
-      title: "Téléchargement Gratuit",
-      content: "MP3, Films, Logiciels - 100% Gratuit !",
-      color: "#00aaff",
-      size: { width: 290, height: 170 }
-    },
-    {
-      title: "Erreur Système",
-      content: "Windows a rencontré une erreur. Redémarrez maintenant.",
-      color: "#c0c0c0",
-      size: { width: 400, height: 150 }
+      width: 280,
+      height: 160
     }
   ];
 
   const startGame = () => {
-    if (gameActive) return;
-    
+    console.log('PopupKiller: Starting game...');
     setGameActive(true);
-    gameActiveRef.current = true;
     setGameOver(false);
     setScore(0);
     setPopups([]);
     setTimeLeft(30);
     popupCounterRef.current = 0;
     
-    // Son de démarrage
-    if (window.audioManager) {
-      window.audioManager.playSound(soundId || 'windows-95');
-    }
-
     // Timer du jeu
     gameTimerRef.current = setInterval(() => {
       setTimeLeft(prev => {
@@ -80,94 +57,69 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
       });
     }, 1000);
 
-    // Commencer à spawner les popups
-    setTimeout(() => spawnPopup(), 500);
+    // Commencer le spawn
+    spawnPopup();
   };
 
+  const MAX_POPUPS = 4;
   const spawnPopup = () => {
-    if (!gameActiveRef.current) return;
-    
-    const template = popupTemplates[Math.floor(Math.random() * popupTemplates.length)];
-    const id = ++popupCounterRef.current;
-    
-    const gameArea = gameAreaRef.current;
-    if (!gameArea) return;
-    
-    const maxX = Math.max(0, gameArea.offsetWidth - template.size.width);
-    const maxY = Math.max(0, gameArea.offsetHeight - template.size.height);
-    
-    const newPopup = {
-      id,
-      ...template,
-      x: Math.random() * maxX,
-      y: Math.random() * maxY,
-      zIndex: 100 + id
-    };
-    
-    setPopups(prev => [...prev, newPopup]);
-    
-    // Animation d'apparition
-    setTimeout(() => {
-      const popupElement = document.getElementById(`popup-${id}`);
-      if (popupElement) {
-        gsap.fromTo(popupElement,
-          { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
-        );
+    setPopups(prevPopups => {
+      if (prevPopups.length >= MAX_POPUPS) {
+        // Si trop de popups, ne rien ajouter et reprogrammer plus tard
+        spawnTimerRef.current = setTimeout(() => {
+          setGameActive(currentActive => {
+            if (currentActive) {
+              spawnPopup();
+            }
+            return currentActive;
+          });
+        }, Math.random() * 3000 + 3000); // 3-6 secondes
+        return prevPopups;
       }
-    }, 10);
-    
-    // Programmer le prochain popup
-    const nextSpawnDelay = Math.random() * 2000 + 1000; // 1-3 secondes
-    setTimeout(() => {
-      if (gameActiveRef.current) { // Vérifier à nouveau l'état du jeu
-        spawnPopup();
-      }
-    }, nextSpawnDelay);
+      // Sinon, ajouter un popup
+      const template = popupTemplates[Math.floor(Math.random() * popupTemplates.length)];
+      const id = ++popupCounterRef.current;
+      const newPopup = {
+        id,
+        ...template,
+        x: Math.random() * 300,
+        y: Math.random() * 200
+      };
+      console.log('PopupKiller: Created popup:', newPopup);
+      // Programmer le prochain popup
+      spawnTimerRef.current = setTimeout(() => {
+        setGameActive(currentActive => {
+          if (currentActive) {
+            spawnPopup();
+          }
+          return currentActive;
+        });
+      }, Math.random() * 3000 + 3000); // 3-6 secondes
+      return [...prevPopups, newPopup];
+    });
   };
 
   const closePopup = (popupId) => {
-    // Animation de fermeture
-    const popupElement = document.getElementById(`popup-${popupId}`);
-    if (popupElement) {
-      gsap.to(popupElement, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.in",
-        onComplete: () => {
-          setPopups(prev => prev.filter(p => p.id !== popupId));
-        }
-      });
-    }
-    
+    console.log('PopupKiller: Closing popup:', popupId);
+    setPopups(prev => prev.filter(p => p.id !== popupId));
     setScore(prev => prev + 10);
-    
-    // Son de fermeture
-    if (window.audioManager) {
-      window.audioManager.playSound('click');
-    }
   };
 
   const endGame = () => {
+    console.log('PopupKiller: Ending game...');
     setGameActive(false);
-    gameActiveRef.current = false;
     setGameOver(true);
-    
+    setPopups([]); // Vider les popups à la fin du jeu
     if (gameTimerRef.current) {
       clearInterval(gameTimerRef.current);
     }
-    
-    // Animation de fin de jeu
-    gsap.to(gameAreaRef.current, {
-      filter: 'grayscale(100%)',
-      duration: 0.5
-    });
+    if (spawnTimerRef.current) {
+      clearTimeout(spawnTimerRef.current);
+    }
   };
 
   const resetGame = () => {
     setGameActive(false);
-    gameActiveRef.current = false;
     setGameOver(false);
     setScore(0);
     setPopups([]);
@@ -176,20 +128,27 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
     if (gameTimerRef.current) {
       clearInterval(gameTimerRef.current);
     }
-    
-    gsap.set(gameAreaRef.current, { filter: 'grayscale(0%)' });
+    if (spawnTimerRef.current) {
+      clearTimeout(spawnTimerRef.current);
+    }
   };
 
   useEffect(() => {
     return () => {
-      if (gameTimerRef.current) {
-        clearInterval(gameTimerRef.current);
-      }
+      if (gameTimerRef.current) clearInterval(gameTimerRef.current);
+      if (spawnTimerRef.current) clearTimeout(spawnTimerRef.current);
     };
   }, []);
 
+  // Mettre à jour les refs quand gameActive change
+  useEffect(() => {
+    if (!gameActive && spawnTimerRef.current) {
+      clearTimeout(spawnTimerRef.current);
+    }
+  }, [gameActive]);
+
   return (
-    <div className="mini-game popup-killer-game">
+    <div className="mini-game popup-killer-game" style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
       <h3>🎯 Internet Explorer - Survivez aux Pop-ups !</h3>
       <p style={{ marginBottom: '1rem', fontSize: '0.9rem', color: '#ccc' }}>
         Fermez un maximum de pop-ups en 30 secondes ! Bienvenue dans l'enfer des années 90 !
@@ -226,8 +185,7 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
           height: '400px',
           background: 'linear-gradient(135deg, #008080, #004040)',
           border: '2px inset #c0c0c0',
-          overflow: 'hidden',
-          cursor: gameActive ? 'crosshair' : 'default'
+          overflow: 'hidden'
         }}
       >
         {/* Écran de démarrage */}
@@ -282,19 +240,13 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
             <div style={{ fontSize: '1rem', marginBottom: '1rem' }}>
               Score final: <strong>{score} points</strong>
             </div>
-            <div style={{ fontSize: '0.9rem', marginBottom: '1.5rem', color: '#ccc' }}>
-              {score >= 200 ? 'Expert en pop-up killing !' :
-               score >= 100 ? 'Pas mal pour un débutant !' :
-               'Il faut s\'entraîner encore...'}
-            </div>
             <button 
               onClick={resetGame}
               style={{
                 background: '#c0c0c0',
                 border: '2px outset #c0c0c0',
                 padding: '0.5rem 1rem',
-                cursor: 'pointer',
-                marginRight: '0.5rem'
+                cursor: 'pointer'
               }}
             >
               🔄 Rejouer
@@ -306,23 +258,22 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
         {popups.map(popup => (
           <div
             key={popup.id}
-            id={`popup-${popup.id}`}
+            onClick={() => closePopup(popup.id)}
             style={{
               position: 'absolute',
               left: popup.x,
               top: popup.y,
-              width: popup.size.width,
-              height: popup.size.height,
+              width: popup.width,
+              height: popup.height,
               background: popup.color,
               border: '2px outset #c0c0c0',
               borderRadius: '4px',
-              zIndex: popup.zIndex,
               cursor: 'pointer',
               fontFamily: 'MS Sans Serif, sans-serif',
               fontSize: '0.8rem',
-              boxShadow: '4px 4px 8px rgba(0,0,0,0.5)'
+              boxShadow: '4px 4px 8px rgba(0,0,0,0.5)',
+              zIndex: 100 + popup.id
             }}
-            onClick={() => closePopup(popup.id)}
           >
             {/* Barre de titre */}
             <div style={{
@@ -374,8 +325,7 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
                 border: '2px outset #ff0000',
                 padding: '0.3rem 0.8rem',
                 cursor: 'pointer',
-                fontWeight: 'bold',
-                animation: 'blink 1s infinite'
+                fontWeight: 'bold'
               }}>
                 CLIQUEZ ICI !
               </button>
@@ -390,11 +340,10 @@ function PopupKillerGame({ soundId = 'windows-95' }) {
         color: '#888',
         fontStyle: 'italic' 
       }}>
-        💡 Nostalgie : En 1995, naviguer sur Internet était un véritable parcours du combattant 
-        avec les pop-ups, bannières clignotantes et publicités envahissantes !
+        💡 Nostalgie : En 1995, naviguer sur Internet était un véritable parcours du combattant !
       </div>
     </div>
   );
-};
+}
 
-export default PopupKillerGame;
+export default PopupKillerGameNew;

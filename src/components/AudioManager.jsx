@@ -1,4 +1,4 @@
-// AudioManager.jsx - Gestionnaire global des sons et effets audio
+// AudioManager.jsx - Gestionnaire global des sons et effets audio optimisé
 import React, { useEffect, useRef } from 'react';
 
 class AudioManager {
@@ -6,6 +6,8 @@ class AudioManager {
     this.sounds = new Map();
     this.isEnabled = true;
     this.volume = 0.5;
+    this.activeSounds = new Set(); // Pool d'instances actives
+    this.maxConcurrentSounds = 3; // Limite de sons simultanés
     this.init();
   }
 
@@ -113,25 +115,85 @@ class AudioManager {
   play(soundId) {
     if (!this.isEnabled) return;
     
+    // Limiter le nombre de sons simultanés
+    if (this.activeSounds.size >= this.maxConcurrentSounds) {
+      this.stopOldestSound();
+    }
+    
     const sound = this.sounds.get(soundId);
     if (sound) {
-      // Reset et lecture
-      sound.currentTime = 0;
-      sound.play().catch(e => {
-        console.warn(`Impossible de jouer le son ${soundId}:`, e);
-      });
-      
-      // Effet visuel de son
-      this.showSoundEffect();
+      try {
+        // Reset et lecture
+        sound.currentTime = 0;
+        const playPromise = sound.play();
+        
+        // Ajouter à la liste des sons actifs
+        this.activeSounds.add(sound);
+        performanceManager.registerAudioInstance(sound);
+        
+        // Nettoyer automatiquement quand terminé
+        const cleanup = () => {
+          this.activeSounds.delete(sound);
+          sound.removeEventListener('ended', cleanup);
+          sound.removeEventListener('pause', cleanup);
+        };
+        
+        sound.addEventListener('ended', cleanup);
+        sound.addEventListener('pause', cleanup);
+        
+        // Gérer les erreurs de lecture
+        if (playPromise !== undefined) {
+          playPromise.catch(e => {
+            console.warn(`Impossible de jouer le son ${soundId}:`, e);
+            cleanup();
+          });
+        }
+        
+        // Effet visuel de son (simplifié)
+        this.showSoundEffect();
+        
+      } catch (error) {
+        console.warn(`Erreur lors de la lecture du son ${soundId}:`, error);
+      }
     }
   }
 
+  stopOldestSound() {
+    const oldestSound = Array.from(this.activeSounds)[0];
+    if (oldestSound) {
+      oldestSound.pause();
+      oldestSound.currentTime = 0;
+      this.activeSounds.delete(oldestSound);
+    }
+  }
+
+  stopAllSounds() {
+    this.activeSounds.forEach(sound => {
+      sound.pause();
+      sound.currentTime = 0;
+    });
+    this.activeSounds.clear();
+  }
+
   showSoundEffect() {
-    // Création d'un indicateur visuel temporaire
-    const indicator = document.querySelector('.sound-wave') || 
-      this.createSoundIndicator();
+    // Effet visuel simplifié pour éviter la surcharge
+    const existingIndicator = document.querySelector('.sound-wave');
+    if (existingIndicator) {
+      existingIndicator.style.opacity = '1';
+      existingIndicator.style.transform = 'scale(1.2)';
+      
+      // Reset après animation
+      setTimeout(() => {
+        existingIndicator.style.opacity = '0.5';
+        existingIndicator.style.transform = 'scale(1)';
+      }, 300);
+      return;
+    }
     
+    // Créer l'indicateur seulement s'il n'existe pas
+    const indicator = this.createSoundIndicator();
     indicator.classList.add('active');
+    
     setTimeout(() => {
       indicator.classList.remove('active');
     }, 500);
@@ -145,11 +207,27 @@ class AudioManager {
       position: fixed;
       top: 2rem;
       right: 2rem;
-      font-size: 2rem;
+      font-size: 1.5rem;
       color: #00ff00;
       z-index: 1000;
       pointer-events: none;
+      opacity: 0.5;
+      transition: all 0.3s ease;
     `;
+    
+    // Ajouter le style CSS pour l'animation
+    if (!document.querySelector('#sound-indicator-style')) {
+      const style = document.createElement('style');
+      style.id = 'sound-indicator-style';
+      style.textContent = `
+        .sound-wave.active {
+          opacity: 1 !important;
+          transform: scale(1.2) !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
     document.body.appendChild(indicator);
     return indicator;
   }
@@ -172,6 +250,31 @@ class AudioManager {
 
   unmute() {
     this.isEnabled = true;
+  }
+
+  // Nettoyage complet
+  cleanup() {
+    this.stopAllSounds();
+    
+    // Nettoyer tous les éléments audio
+    this.sounds.forEach(sound => {
+      if (sound && typeof sound.remove === 'function') {
+        sound.remove();
+      }
+    });
+    this.sounds.clear();
+    
+    // Supprimer l'indicateur sonore
+    const indicator = document.querySelector('.sound-wave');
+    if (indicator) {
+      indicator.remove();
+    }
+    
+    // Supprimer le style CSS
+    const style = document.querySelector('#sound-indicator-style');
+    if (style) {
+      style.remove();
+    }
   }
 }
 

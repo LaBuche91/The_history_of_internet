@@ -15,11 +15,11 @@ const TimelineSection = React.lazy(() =>
   }))
 );
 
-const AudioManager = React.lazy(() => 
-  import('./components/AudioManager').catch(() => ({ 
-    default: () => null
-  }))
-);
+// const AudioManager = React.lazy(() => 
+//   import('./components/AudioManager').catch(() => ({ 
+//     default: () => null
+//   }))
+// );
 
 function App() {
   const appRef = useRef(null);
@@ -55,7 +55,7 @@ function App() {
             Chargement des composants interactifs...
           </div>
         }>
-          <AudioManager />
+          {/* <AudioManager /> */}
           <HeroSection />
           <TimelineSection />
         </React.Suspense>

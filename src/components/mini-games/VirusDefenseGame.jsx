@@ -1,8 +1,7 @@
-// VirusDefenseGame.jsx - Mini-jeu de défense contre les virus
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
+// VirusDefenseGameNew.jsx - Version simplifiée du jeu de défense anti-virus
+import React, { useState, useRef, useEffect } from 'react';
 
-function VirusDefenseGame({ soundId = 'alert-sound' }) {
+function VirusDefenseGameNew({ soundId = 'alert-sound' }) {
   const [gameActive, setGameActive] = useState(false);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
@@ -12,10 +11,9 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
   const [infectionLevel, setInfectionLevel] = useState(0);
   
   const gameAreaRef = useRef(null);
-  const gameTimerRef = useRef(null);
   const threatCounterRef = useRef(0);
+  const gameTimerRef = useRef(null);
   const spawnTimerRef = useRef(null);
-  const gameActiveRef = useRef(false);
 
   const threatTypes = [
     {
@@ -37,15 +35,6 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
       icon: '🦠'
     },
     {
-      type: 'spyware',
-      title: 'Antivirus Gratuit',
-      content: 'Téléchargez maintenant !',
-      color: '#ffaa00',
-      points: 12,
-      damage: 1,
-      icon: '🕵️'
-    },
-    {
       type: 'trojan',
       title: 'Mise à jour Windows',
       content: 'Cliquez pour installer',
@@ -53,32 +42,12 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
       points: 20,
       damage: 3,
       icon: '🐴'
-    },
-    {
-      type: 'adware',
-      title: 'Rencontres Locales',
-      content: 'Célibataires près de chez vous',
-      color: '#ff69b4',
-      points: 8,
-      damage: 1,
-      icon: '💋'
-    },
-    {
-      type: 'scam',
-      title: 'Erreur Système',
-      content: 'Appelez le 08-XX-XX-XX-XX',
-      color: '#666666',
-      points: 18,
-      damage: 2,
-      icon: '📞'
     }
   ];
 
   const startGame = () => {
-    if (gameActive) return;
-    
+    console.log('VirusDefense: Starting game...');
     setGameActive(true);
-    gameActiveRef.current = true;
     setGameOver(false);
     setScore(0);
     setLives(3);
@@ -87,11 +56,6 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
     setInfectionLevel(0);
     threatCounterRef.current = 0;
     
-    // Son d'alerte
-    if (window.audioManager) {
-      window.audioManager.playSound(soundId || 'alert-sound');
-    }
-
     // Timer principal
     gameTimerRef.current = setInterval(() => {
       setTimeLeft(prev => {
@@ -103,137 +67,55 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
       });
     }, 1000);
 
-    // Spawn des menaces
-    startThreatSpawning();
-  };
-
-  const startThreatSpawning = () => {
-    const spawnThreat = () => {
-      if (!gameActiveRef.current) return;
-      
-      const threatTemplate = threatTypes[Math.floor(Math.random() * threatTypes.length)];
-      const id = ++threatCounterRef.current;
-      
-      const gameArea = gameAreaRef.current;
-      if (!gameArea) return;
-      
-      const maxX = Math.max(0, gameArea.offsetWidth - 300);
-      const maxY = Math.max(0, gameArea.offsetHeight - 200);
-      
-      const newThreat = {
-        id,
-        ...threatTemplate,
-        x: Math.random() * maxX,
-        y: Math.random() * maxY,
-        zIndex: 100 + id,
-        createdAt: Date.now()
-      };
-      
-      setThreats(prev => [...prev, newThreat]);
-      
-      // Animation d'apparition
-      setTimeout(() => {
-        const threatElement = document.getElementById(`threat-${id}`);
-        if (threatElement) {
-          gsap.fromTo(threatElement,
-            { scale: 0, opacity: 0, rotation: -180 },
-            { scale: 1, opacity: 1, rotation: 0, duration: 0.5, ease: "back.out(1.7)" }
-          );
-          
-          // Effet de pulsation pour attirer l'attention
-          gsap.to(threatElement, {
-            scale: 1.1,
-            duration: 0.8,
-            yoyo: true,
-            repeat: -1,
-            ease: "power2.inOut"
-          });
-        }
-      }, 10);
-      
-      // Auto-dommage après 5 secondes si pas fermé
-      setTimeout(() => {
-        if (gameActiveRef.current) {
-          setThreats(current => {
-            const threat = current.find(t => t.id === id);
-            if (threat) {
-              takeDamage(threat.damage);
-              return current.filter(t => t.id !== id);
-            }
-            return current;
-          });
-        }
-      }, 5000);
-      
-      // Programmer la prochaine menace
-      const delay = Math.max(500, 3000 - (threatCounterRef.current * 50)); // Accélération progressive
-      setTimeout(() => {
-        if (gameActiveRef.current) { // Vérifier à nouveau l'état du jeu
-          spawnThreat();
-        }
-      }, delay);
-    };
-    
+    // Commencer le spawn
     spawnThreat();
   };
 
+  const spawnThreat = () => {
+    console.log('VirusDefense: Spawning threat...');
+    const threatTemplate = threatTypes[Math.floor(Math.random() * threatTypes.length)];
+    const id = ++threatCounterRef.current;
+    
+    const newThreat = {
+      id,
+      ...threatTemplate,
+      x: Math.random() * 400,
+      y: Math.random() * 250
+    };
+    
+    console.log('VirusDefense: Created threat:', newThreat);
+    setThreats(prev => [...prev, newThreat]);
+    
+    // Auto-dommage après 7 secondes si pas fermé (au lieu de 5)
+    setTimeout(() => {
+      setThreats(current => {
+        const threat = current.find(t => t.id === id);
+        if (threat) {
+          takeDamage(threat.damage);
+          return current.filter(t => t.id !== id);
+        }
+        return current;
+      });
+    }, 7000);
+    
+    // Programmer la prochaine menace en utilisant l'état actuel
+    spawnTimerRef.current = setTimeout(() => {
+      setGameActive(currentActive => {
+        if (currentActive) {
+          spawnThreat();
+        }
+        return currentActive;
+      });
+    }, Math.random() * 3000 + 2500); // 2.5-5.5 secondes au lieu de 1.5-3.5 secondes
+  };
+
   const closeThreat = (threatId) => {
+    console.log('VirusDefense: Closing threat:', threatId);
     const threat = threats.find(t => t.id === threatId);
     if (!threat) return;
     
-    // Animation de fermeture
-    const threatElement = document.getElementById(`threat-${threatId}`);
-    if (threatElement) {
-      gsap.to(threatElement, {
-        scale: 0,
-        opacity: 0,
-        rotation: 180,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-          setThreats(prev => prev.filter(t => t.id !== threatId));
-        }
-      });
-    }
-    
+    setThreats(prev => prev.filter(t => t.id !== threatId));
     setScore(prev => prev + threat.points);
-    
-    // Son de succès
-    if (window.audioManager) {
-      window.audioManager.playSound('click');
-    }
-    
-    // Effet visuel de succès
-    showSuccessEffect(threatElement);
-  };
-
-  const showSuccessEffect = (element) => {
-    if (!element) return;
-    
-    const rect = element.getBoundingClientRect();
-    const effect = document.createElement('div');
-    effect.innerHTML = '✅ +' + (threats.find(t => t.id === element.id?.split('-')[1])?.points || 10);
-    effect.style.cssText = `
-      position: fixed;
-      left: ${rect.left + rect.width/2}px;
-      top: ${rect.top}px;
-      color: #00ff00;
-      font-weight: bold;
-      font-size: 1.2rem;
-      z-index: 10000;
-      pointer-events: none;
-      text-shadow: 2px 2px 4px #000;
-    `;
-    
-    document.body.appendChild(effect);
-    
-    gsap.to(effect, {
-      y: -50,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.out",
-      onComplete: () => document.body.removeChild(effect)
-    });
   };
 
   const takeDamage = (damage) => {
@@ -247,45 +129,19 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
     });
     
     setInfectionLevel(prev => Math.min(100, prev + damage * 10));
-    
-    // Son de dommage
-    if (window.audioManager) {
-      window.audioManager.playSound('error');
-    }
-    
-    // Effet de dommage sur l'écran
-    gsap.to(gameAreaRef.current, {
-      backgroundColor: '#ff0000',
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1,
-      onComplete: () => {
-        gsap.set(gameAreaRef.current, { backgroundColor: 'transparent' });
-      }
-    });
   };
 
   const endGame = () => {
+    console.log('VirusDefense: Ending game...');
     setGameActive(false);
-    gameActiveRef.current = false;
     setGameOver(true);
-    setThreats([]); // Supprimer toutes les menaces
+    setThreats([]);
     
     if (gameTimerRef.current) {
       clearInterval(gameTimerRef.current);
-      gameTimerRef.current = null;
     }
     if (spawnTimerRef.current) {
       clearTimeout(spawnTimerRef.current);
-      spawnTimerRef.current = null;
-    }
-    
-    // Animation de fin
-    if (gameAreaRef.current) {
-      gsap.to(gameAreaRef.current, {
-        filter: 'sepia(100%) contrast(200%)',
-        duration: 1
-      });
     }
   };
 
@@ -304,8 +160,6 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
     if (spawnTimerRef.current) {
       clearTimeout(spawnTimerRef.current);
     }
-    
-    gsap.set(gameAreaRef.current, { filter: 'none' });
   };
 
   useEffect(() => {
@@ -315,8 +169,15 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
     };
   }, []);
 
+  // Mettre à jour les refs quand gameActive change
+  useEffect(() => {
+    if (!gameActive && spawnTimerRef.current) {
+      clearTimeout(spawnTimerRef.current);
+    }
+  }, [gameActive]);
+
   return (
-    <div className="mini-game virus-defense-game">
+    <div className="mini-game virus-defense-game" style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
       <h3>🛡️ Défense Anti-Virus - Années 2000</h3>
       <p style={{ marginBottom: '1rem', fontSize: '0.9rem', color: '#ccc' }}>
         Survivez à l'invasion des virus, pop-ups et malware ! Fermez tout avant que votre PC soit infecté !
@@ -372,8 +233,7 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
           height: '500px',
           background: 'linear-gradient(135deg, #008080, #004040)',
           border: '2px inset #c0c0c0',
-          overflow: 'hidden',
-          cursor: gameActive ? 'crosshair' : 'default'
+          overflow: 'hidden'
         }}
       >
         {/* Écran de démarrage */}
@@ -389,9 +249,6 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
             <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🛡️</div>
             <div style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>
               Prêt à défendre votre PC contre les malware ?
-            </div>
-            <div style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#ccc' }}>
-              Fermez les pop-ups et virus avant qu'ils infectent votre système !
             </div>
             <button 
               onClick={startGame}
@@ -432,12 +289,6 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
             <div style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
               Score final: <strong>{score} points</strong>
             </div>
-            <div style={{ fontSize: '0.9rem', marginBottom: '1.5rem', color: '#ccc' }}>
-              {score >= 300 ? 'Expert en cybersécurité !' :
-               score >= 150 ? 'Bon réflexe de défense !' :
-               score >= 50 ? 'Il faut encore s\'entraîner...' :
-               'Votre PC a besoin d\'un bon antivirus !'}
-            </div>
             <button 
               onClick={resetGame}
               style={{
@@ -458,7 +309,7 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
         {threats.map(threat => (
           <div
             key={threat.id}
-            id={`threat-${threat.id}`}
+            onClick={() => closeThreat(threat.id)}
             style={{
               position: 'absolute',
               left: threat.x,
@@ -468,13 +319,12 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
               background: threat.color,
               border: '2px outset #c0c0c0',
               borderRadius: '4px',
-              zIndex: threat.zIndex,
               cursor: 'pointer',
               fontFamily: 'MS Sans Serif, sans-serif',
               fontSize: '0.8rem',
-              boxShadow: '6px 6px 12px rgba(0,0,0,0.7)'
+              boxShadow: '6px 6px 12px rgba(0,0,0,0.7)',
+              zIndex: 100 + threat.id
             }}
-            onClick={() => closeThreat(threat.id)}
           >
             {/* Barre de titre */}
             <div style={{
@@ -510,7 +360,7 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
             <div style={{
               padding: '1rem',
               textAlign: 'center',
-              color: threat.color === '#ffaa00' ? '#000' : '#fff',
+              color: '#fff',
               fontWeight: 'bold',
               display: 'flex',
               flexDirection: 'column',
@@ -530,30 +380,15 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
                 padding: '0.4rem 1rem',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                animation: 'blink 1s infinite',
                 fontSize: '0.8rem'
               }}>
                 {threat.type === 'popup' ? 'CLIQUEZ ICI !' :
                  threat.type === 'virus' ? 'SCANNER MAINTENANT' :
-                 threat.type === 'spyware' ? 'TÉLÉCHARGER' :
-                 threat.type === 'trojan' ? 'INSTALLER' :
-                 threat.type === 'adware' ? 'VOIR PROFILS' :
-                 'APPELER MAINTENANT'}
+                 'INSTALLER'}
               </button>
             </div>
           </div>
         ))}
-
-        {/* Effet de scanlines rétro */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px)',
-          pointerEvents: 'none'
-        }} />
       </div>
       
       <div style={{ 
@@ -562,11 +397,10 @@ function VirusDefenseGame({ soundId = 'alert-sound' }) {
         color: '#888',
         fontStyle: 'italic' 
       }}>
-        💡 Nostalgie : Les années 2000 étaient l'âge d'or des virus informatiques ! 
-        Pas d'antivirus moderne, juste votre vigilance contre les pop-ups malveillantes !
+        💡 Nostalgie : Les années 2000 étaient l'âge d'or des virus informatiques !
       </div>
     </div>
   );
-};
+}
 
-export default VirusDefenseGame;
+export default VirusDefenseGameNew;
