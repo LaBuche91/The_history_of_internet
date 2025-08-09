@@ -1,0 +1,36 @@
+/* Variables CSS pour The History of Internet */
+:root {
+  /* Couleurs principales */
+  --retro-green: #00ff88;
+  --retro-amber: #ffb02a;
+  --retro-blue: #2196f3;
+  --retro-purple: #9c27b0;
+  --retro-cyan: #00bcd4;
+  
+  /* Arrière-plans */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #16213e;
+  --bg-card: rgba(26, 26, 46, 0.9);
+  
+  /* Textes */
+  --text-primary: #ffffff;
+  --text-secondary: #b8c5d6;
+  --text-muted: #8d9db8;
+  
+  /* Dégradés */
+  --accent-gradient: linear-gradient(135deg, var(--retro-green), var(--retro-cyan));
+  --accent-gradient-alt: linear-gradient(135deg, var(--retro-purple), var(--retro-blue));
+  
+  /* Ombres */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-intense: 0 8px 40px rgba(0, 255, 136, 0.2);
+  
+  /* Border radius */
+  --border-radius: 12px;
+  --border-radius-lg: 20px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

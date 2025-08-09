@@ -1,0 +1,358 @@
+/* Styles par décennie et époque */
+
+/* Années 1960s-1970s - Terminal vert */
+.event-1969 {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #001a0d 0%, #000d07 100%);
+}
+
+.event-1969 .event-title {
+  color: var(--retro-green);
+  text-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+}
+
+.event-1969 .event-description {
+  color: #d4ffdc;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-1969 .event-interactive {
+  border-color: var(--retro-green);
+  background: rgba(0, 26, 13, 0.9);
+  color: #e6ffe6;
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+/* Années 1980s - Cyan et grille */
+.event-1983 {
+  background: 
+    linear-gradient(90deg, transparent 49%, rgba(0, 255, 255, 0.1) 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, rgba(0, 255, 255, 0.05) 50%, transparent 51%),
+    linear-gradient(135deg, #001a1a 0%, #000a0a 100%);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+}
+
+.event-1983 .event-title {
+  color: #00ffff;
+  text-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+.event-1983 .event-description {
+  color: #d4ffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-1983 .event-interactive {
+  border-color: #00ffff;
+  background: rgba(0, 26, 26, 0.9);
+  color: #e6ffff;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+/* Années 1990s - Styles distincts pour chaque époque */
+
+/* 1990 - HTTP et premier navigateur */
+.event-1990 {
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 20px,
+      rgba(64, 224, 208, 0.1) 20px,
+      rgba(64, 224, 208, 0.1) 40px
+    ),
+    linear-gradient(135deg, #001a18 0%, #003330 50%, #002622 100%);
+}
+
+.event-1990 .event-title {
+  color: #40e0d0;
+  text-shadow: 0 0 20px rgba(64, 224, 208, 0.5);
+}
+
+.event-1990 .event-description {
+  color: #b3f0e8;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-1990 .event-interactive {
+  border-color: #40e0d0;
+  background: rgba(0, 35, 30, 0.9);
+  color: #e6fffc;
+  box-shadow: 0 0 30px rgba(64, 224, 208, 0.3);
+}
+
+/* 1991 - Début du Web */
+.event-1991 {
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(0, 128, 128, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #001a1a 0%, #003333 50%, #002020 100%);
+}
+
+.event-1991 .event-title {
+  color: #00cccc;
+  text-shadow: 0 0 20px rgba(0, 204, 204, 0.5);
+}
+
+.event-1991 .event-description {
+  color: #c7f0f0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-1991 .event-interactive {
+  border-color: #00cccc;
+  background: rgba(0, 40, 40, 0.9);
+  color: #e6ffff;
+  box-shadow: 0 0 30px rgba(0, 204, 204, 0.3);
+}
+
+/* 1995 - Explosion du Web grand public */
+.event-1995 {
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(255, 215, 0, 0.1) 35px,
+      rgba(255, 215, 0, 0.1) 70px
+    ),
+    linear-gradient(135deg, #1a1a00 0%, #333300 50%, #262600 100%);
+}
+
+.event-1995 .event-title {
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.event-1995 .event-description {
+  color: #fffacd;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+.event-1995 .event-interactive {
+  border-color: #ffd700;
+  background: rgba(40, 40, 0, 0.9);
+  color: #fffacd;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+/* 1998 - Moteurs de recherche */
+.event-1998 {
+  background: 
+    radial-gradient(ellipse at 60% 30%, rgba(255, 69, 0, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(255, 140, 0, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #1a0800 0%, #330f00 50%, #261100 100%);
+}
+
+.event-1998 .event-title {
+  color: #ff6347;
+  text-shadow: 0 0 20px rgba(255, 99, 71, 0.5);
+}
+
+.event-1998 .event-description {
+  color: #ffd4c4;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+.event-1998 .event-interactive {
+  border-color: #ff6347;
+  background: rgba(40, 15, 0, 0.9);
+  color: #ffe4d6;
+  box-shadow: 0 0 30px rgba(255, 99, 71, 0.3);
+}
+
+/* 1999 - Napster et P2P */
+.event-1999 {
+  background: 
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(138, 43, 226, 0.1) 45deg,
+      transparent 90deg
+    ),
+    linear-gradient(135deg, #1a001a 0%, #330033 50%, #260026 100%);
+}
+
+.event-1999 .event-title {
+  color: #da70d6;
+  text-shadow: 0 0 20px rgba(218, 112, 214, 0.5);
+}
+
+.event-1999 .event-description {
+  color: #f4c2f1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+.event-1999 .event-interactive {
+  border-color: #da70d6;
+  background: rgba(40, 0, 40, 0.9);
+  color: #f9e6f9;
+  box-shadow: 0 0 30px rgba(218, 112, 214, 0.3);
+}
+
+/* Années 2000s - Styles distincts pour chaque époque */
+
+/* 2000 - GeoCities et sites personnels */
+.event-2000 {
+  background: 
+    radial-gradient(ellipse at 30% 70%, rgba(255, 105, 180, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 30%, rgba(50, 205, 50, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #1a0d1a 0%, #330533 50%, #260826 100%);
+}
+
+.event-2000 .event-title {
+  color: #ff69b4;
+  text-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+}
+
+.event-2000 .event-description {
+  color: #ffcce5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-2000 .event-interactive {
+  border-color: #ff69b4;
+  background: rgba(40, 13, 40, 0.9);
+  color: #ffe6f5;
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+}
+
+/* 2003 - MSN Messenger */
+.event-2003 {
+  background: 
+    radial-gradient(ellipse at 20% 80%, rgba(0, 128, 255, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 165, 0, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #000d1a 0%, #001a33 50%, #001326 100%);
+}
+
+.event-2003 .event-title {
+  color: #0080ff;
+  text-shadow: 0 0 25px rgba(0, 128, 255, 0.6);
+}
+
+.event-2003 .event-description {
+  color: #b3d9ff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-2003 .event-interactive {
+  border-color: #0080ff;
+  background: rgba(0, 20, 40, 0.9);
+  color: #e6f0ff;
+  box-shadow: 0 0 30px rgba(0, 128, 255, 0.3);
+}
+
+/* 2004 - Virus et pop-ups */
+.event-2004 {
+  background: 
+    radial-gradient(ellipse at 40% 60%, rgba(255, 0, 0, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 40%, rgba(255, 255, 0, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #1a0000 0%, #330000 50%, #260000 100%);
+}
+
+.event-2004 .event-title {
+  color: #ff4444;
+  text-shadow: 0 0 25px rgba(255, 68, 68, 0.6);
+}
+
+.event-2004 .event-description {
+  color: #ffcccc;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+.event-2004 .event-interactive {
+  border-color: #ff4444;
+  background: rgba(40, 0, 0, 0.9);
+  color: #ffe6e6;
+  box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+}
+
+/* 2005 - YouTube */
+.event-2005 {
+  background: 
+    radial-gradient(ellipse at 25% 75%, rgba(255, 0, 0, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #1a0500 0%, #330a00 50%, #260800 100%);
+}
+
+.event-2005 .event-title {
+  color: #ff0000;
+  text-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+}
+
+.event-2005 .event-description {
+  color: #ffb3b3;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+.event-2005 .event-interactive {
+  border-color: #ff0000;
+  background: rgba(40, 5, 0, 0.9);
+  color: #ffe6e6;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+}
+
+/* Années 2010s - Web 2.0 moderne */
+.event-2010 {
+  background: 
+    radial-gradient(circle at 25% 25%, #667eea 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, #764ba2 0%, transparent 50%),
+    linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+.event-2010 .event-title {
+  color: #8fa2ea;
+  text-shadow: 0 0 25px rgba(143, 162, 234, 0.6);
+}
+
+.event-2010 .event-description {
+  color: #dce4ff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-2010 .event-interactive {
+  border-color: #667eea;
+  background: rgba(44, 62, 80, 0.9);
+  color: #ecf0f1;
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+}
+
+/* Années 2020s - IA et futur */
+.event-2020 {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(30, 144, 255, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+.event-2020 .event-title {
+  color: #b794f6;
+  text-shadow: 0 0 25px rgba(183, 148, 246, 0.6);
+}
+
+.event-2020 .event-description {
+  color: #f1e7fe;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.event-2020 .event-interactive {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #8a2be2, #1e90ff, #00ff7f) 1;
+  background: rgba(21, 21, 50, 0.9);
+  color: #f7fafc;
+  box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+}

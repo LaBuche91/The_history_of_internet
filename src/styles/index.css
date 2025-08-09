@@ -1,0 +1,20 @@
+/* Point d'entrée principal pour tous les styles */
+
+/* Fondation */
+@import './foundation/variables.css';
+@import './foundation/reset.css';
+@import './foundation/typography.css';
+
+/* Composants */
+@import './components/hero.css';
+@import './components/timeline.css';
+@import './components/buttons.css';
+@import './components/scrollbar.css';
+
+/* Thèmes */
+@import './themes/animations.css';
+@import './themes/decades.css';
+
+/* Mini-jeux */
+@import './mini-games/base.css';
+@import './mini-games/http-protocol.css';

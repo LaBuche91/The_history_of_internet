@@ -3,7 +3,7 @@
     "id": "arpanet-1969",
     "year": 1969,
     "title": "Naissance d'ARPANET",
-    "description": "Le 29 octobre 1969, le premier message est envoyé entre l'UCLA et Stanford. Ce simple 'LO' (tentative d'envoyer 'LOGIN') marque le début d'Internet.",
+    "description": "Le 29 octobre 1969, le premier message est envoyé entre l'UCLA et le Stanford Research Institute. Ce simple 'LO' (tentative d'envoyer 'LOGIN') marque le début d'Internet.",
     "type": "mini-game",
     "decade": "1960s",
     "media": {
@@ -19,7 +19,7 @@
     "id": "tcp-ip-1983",
     "year": 1983,
     "title": "TCP/IP devient standard",
-    "description": "Le protocole TCP/IP devient la norme universelle, permettant aux différents réseaux de communiquer entre eux. C'est la naissance d'Internet tel qu'on le connaît.",
+    "description": "Le 1er janvier 1983, le protocole TCP/IP devient la norme universelle, permettant aux différents réseaux de communiquer entre eux. C'est la naissance d'Internet tel qu'on le connaît.",
     "type": "mini-game",
     "decade": "1980s",
     "media": {
@@ -32,10 +32,26 @@
     }
   },
   {
+    "id": "http-1990",
+    "year": 1990,
+    "title": "Création du protocole HTTP et du premier navigateur",
+    "description": "Tim Berners-Lee invente le protocole HTTP et crée le premier navigateur web, nommé WorldWideWeb, posant les bases de la navigation sur Internet.",
+    "type": "mini-game",
+    "decade": "1990s",
+    "media": {
+      "image": "first-browser.png",
+      "sound": "modem-connect.mp3"
+    },
+    "interactivity": {
+      "type": "browser-simulation",
+      "description": "Découvrez le premier navigateur web en action"
+    }
+  },
+  {
     "id": "web-html-1991",
     "year": 1991,
     "title": "Naissance du Web (HTML)",
-    "description": "Tim Berners-Lee crée le World Wide Web au CERN. La première page web est mise en ligne, révolutionnant l'accès à l'information.",
+    "description": "En août 1991, Tim Berners-Lee met en ligne la toute première page web au CERN, révolutionnant l'accès à l'information dans le monde entier.",
     "type": "mini-game",
     "decade": "1990s",
     "media": {
@@ -51,7 +67,7 @@
     "id": "internet-explorer-1995",
     "year": 1995,
     "title": "Internet Explorer",
-    "description": "Microsoft lance Internet Explorer, déclenchant les guerres des navigateurs. L'époque des pop-ups invasives commence !",
+    "description": "Microsoft lance Internet Explorer, déclenchant les guerres des navigateurs. L'époque des pop-ups invasives et des barres d'outils commence !",
     "type": "mini-game",
     "decade": "1990s",
     "media": {
@@ -67,7 +83,7 @@
     "id": "google-1998",
     "year": 1998,
     "title": "Google",
-    "description": "Larry Page et Sergey Brin lancent Google depuis leur garage. La recherche web ne sera plus jamais la même.",
+    "description": "Larry Page et Sergey Brin lancent Google depuis leur garage en septembre 1998. La recherche web ne sera plus jamais la même.",
     "type": "mini-game",
     "decade": "1990s",
     "media": {
@@ -83,7 +99,7 @@
     "id": "mp3-download-1999",
     "year": 1999,
     "title": "L'ère du téléchargement MP3",
-    "description": "Napster révolutionne le partage de musique. Revivez l'époque où télécharger un MP3 était une aventure de patience.",
+    "description": "Napster révolutionne le partage de musique en 1999. Revivez l'époque où télécharger un MP3 était une aventure pleine de patience et de surprises.",
     "type": "mini-game",
     "decade": "1990s",
     "media": {
@@ -99,7 +115,7 @@
     "id": "geocities-2000",
     "year": 2000,
     "title": "GeoCities et les sites personnels",
-    "description": "L'âge d'or des sites personnels avec GIFs animés, Comic Sans et compteurs de visiteurs. Créez votre propre chef-d'œuvre rétro !",
+    "description": "L'âge d'or des sites personnels avec GIFs animés, Comic Sans et compteurs de visiteurs. Créez votre propre chef-d'œuvre rétro ! GeoCities fermera en 2009, marquant la fin d'une époque.",
     "type": "mini-game",
     "decade": "2000s",
     "media": {
@@ -115,7 +131,7 @@
     "id": "msn-messenger-2003",
     "year": 2003,
     "title": "MSN Messenger et les Nudges",
-    "description": "L'apogée de la messagerie instantanée avec les statuts personnalisés, émoticônes animées et les fameux nudges.",
+    "description": "L'apogée de la messagerie instantanée avec les statuts personnalisés, émoticônes animées et les fameux nudges qui secouaient la fenêtre de chat.",
     "type": "mini-game",
     "decade": "2000s",
     "media": {
@@ -147,7 +163,7 @@
     "id": "youtube-2005",
     "year": 2005,
     "title": "YouTube",
-    "description": "Chad Hurley, Steve Chen et Jawed Karim lancent YouTube. La première vidéo 'Me at the zoo' change à jamais notre façon de consommer du contenu.",
+    "description": "Chad Hurley, Steve Chen et Jawed Karim lancent YouTube. La première vidéo 'Me at the zoo' change à jamais notre façon de consommer du contenu vidéo en ligne.",
     "type": "mini-game",
     "decade": "2000s",
     "media": {
@@ -163,7 +179,7 @@
     "id": "web2-2010",
     "year": 2010,
     "title": "Web 2.0 et réseaux sociaux",
-    "description": "Facebook, Twitter, LinkedIn... Les réseaux sociaux transforment Internet en plateforme interactive. Bienvenue dans l'ère du partage !",
+    "description": "Facebook, Twitter, LinkedIn... Les réseaux sociaux transforment Internet en plateforme interactive et sociale. Bienvenue dans l'ère du partage et de l'interaction !",
     "type": "mini-game",
     "decade": "2010s",
     "media": {
@@ -179,7 +195,7 @@
     "id": "cloud-ai-2020",
     "year": 2020,
     "title": "Cloud et Intelligence Artificielle",
-    "description": "L'avènement du cloud computing et de l'IA grand public. ChatGPT, services cloud... l'internet devient intelligent !",
+    "description": "L'avènement du cloud computing et de l'IA grand public. ChatGPT, services cloud, assistants intelligents... L'internet devient plus intelligent et omniprésent.",
     "type": "mini-game",
     "decade": "2020s",
     "media": {

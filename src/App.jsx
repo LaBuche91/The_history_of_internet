@@ -1,6 +1,6 @@
 // App.jsx - Composant principal de l'expérience interactive
 import React, { useEffect, useRef, useState } from 'react';
-import './styles/App.css';
+import './styles/index.css';
 
 // Import conditionnel des composants pour éviter les erreurs
 const HeroSection = React.lazy(() => 

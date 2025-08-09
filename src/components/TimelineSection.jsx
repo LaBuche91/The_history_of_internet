@@ -2,8 +2,10 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import eventsConfig from '../events.config.json';
 import ArpanetGame from './mini-games/ArpanetGame';
 import TCPIPGame from './mini-games/TCPIPGame';
+import HTTPProtocolGame from './mini-games/HTTPProtocolGame';
 import HTMLFirstPageGame from './mini-games/HTMLFirstPageGame';
 import PopupKillerGame from './mini-games/PopupKillerGame';
 import GoogleSearchGame from './mini-games/GoogleSearchGame';
@@ -20,137 +22,30 @@ gsap.registerPlugin(ScrollTrigger);
 const TimelineSection = () => {
   const timelineRef = useRef(null);
 
-  // Configuration des événements avec leurs composants interactifs
-  const events = [
-    {
-      id: 'arpanet-1969',
-      year: '1969',
-      title: 'Naissance d\'ARPANET',
-      description: `Le 29 octobre 1969, le premier message est envoyé entre 
-        l'UCLA et Stanford. Ce simple "LO" (tentative d'envoyer "LOGIN") 
-        marque le début d'Internet.`,
-      className: 'event-1969',
-      component: ArpanetGame,
-      sound: 'retro-beep'
-    },
-    {
-      id: 'tcp-ip-1983',
-      year: '1983',
-      title: 'TCP/IP devient standard',
-      description: `Le protocole TCP/IP devient la norme universelle, 
-        permettant aux différents réseaux de communiquer entre eux. 
-        C'est la naissance d'Internet tel qu'on le connaît.`,
-      className: 'event-1983',
-      component: TCPIPGame,
-      sound: 'computer-beep'
-    },
-    {
-      id: 'web-html-1991',
-      year: '1991',
-      title: 'Naissance du Web (HTML)',
-      description: `Tim Berners-Lee crée le World Wide Web au CERN. 
-        La première page web est mise en ligne, révolutionnant 
-        l'accès à l'information.`,
-      className: 'event-1991',
-      component: HTMLFirstPageGame,
-      sound: 'modem-connect'
-    },
-    {
-      id: 'internet-explorer-1995',
-      year: '1995',
-      title: 'Internet Explorer',
-      description: `Microsoft lance Internet Explorer, déclenchant les 
-        guerres des navigateurs. L'époque des pop-ups invasives commence !`,
-      className: 'event-1995',
-      component: PopupKillerGame,
-      sound: 'windows-95'
-    },
-    {
-      id: 'google-1998',
-      year: '1998',
-      title: 'Google',
-      description: `Larry Page et Sergey Brin lancent Google depuis leur garage. 
-        La recherche web ne sera plus jamais la même.`,
-      className: 'event-1998',
-      component: GoogleSearchGame,
-      sound: 'dial-up'
-    },
-    {
-      id: 'mp3-download-1999',
-      year: '1999',
-      title: 'L\'ère du téléchargement MP3',
-      description: `Napster révolutionne le partage de musique. Revivez 
-        l'époque où télécharger un MP3 était une aventure de patience 
-        et d'espoir que la connexion ne se coupe pas.`,
-      className: 'event-1999',
-      component: MP3DownloadGame,
-      sound: 'dialup-modem'
-    },
-    {
-      id: 'geocities-2000',
-      year: '2000',
-      title: 'GeoCities et les sites personnels',
-      description: `L'âge d'or des sites personnels avec GIFs animés, 
-        Comic Sans et compteurs de visiteurs. Créez votre propre 
-        chef-d'œuvre rétro !`,
-      className: 'event-2000',
-      component: GeoCitiesBuilder,
-      sound: 'midi-music'
-    },
-    {
-      id: 'msn-messenger-2003',
-      year: '2003',
-      title: 'MSN Messenger et les Nudges',
-      description: `L'apogée de la messagerie instantanée. Les statuts 
-        personnalisés, les émoticônes animées et bien sûr... les fameux 
-        nudges qui faisaient vibrer l'écran de vos amis.`,
-      className: 'event-2003',
-      component: MSNNudgeGame,
-      sound: 'msn-sound'
-    },
-    {
-      id: 'virus-pop-ups-2004',
-      year: '2004',
-      title: 'L\'invasion des virus et pop-ups',
-      description: `L'internet sauvage des années 2000 : virus, spyware, 
-        et pop-ups à gogo. Survivez à cette époque dangereuse !`,
-      className: 'event-2004',
-      component: VirusDefenseGame,
-      sound: 'alert-sound'
-    },
-    {
-      id: 'youtube-2005',
-      year: '2005',
-      title: 'YouTube',
-      description: `Chad Hurley, Steve Chen et Jawed Karim lancent YouTube. 
-        La première vidéo 'Me at the zoo' change à jamais notre façon 
-        de consommer du contenu.`,
-      className: 'event-2005',
-      component: YouTubeVintageGame,
-      sound: 'youtube-intro'
-    },
-    {
-      id: 'web2-2010',
-      year: '2010',
-      title: 'Web 2.0 et réseaux sociaux',
-      description: `Facebook, Twitter, LinkedIn... Les réseaux sociaux 
-        transforment Internet en plateforme interactive. Bienvenue 
-        dans l'ère du partage !`,
-      className: 'event-2010',
-      component: SocialMediaDashboard,
-      sound: 'notification'
-    },
-    {
-      id: 'cloud-ai-2020',
-      year: '2020',
-      title: 'Cloud et Intelligence Artificielle',
-      description: `L'avènement du cloud computing et de l'IA grand public. 
-        ChatGPT, services cloud... l'internet devient intelligent !`,
-      className: 'event-2020',
-      component: AIChatGame,
-      sound: 'ai-beep'
-    }
-  ];
+  // Mapping des composants interactifs
+  const componentMap = {
+    'arpanet-1969': ArpanetGame,
+    'tcp-ip-1983': TCPIPGame,
+    'http-1990': HTTPProtocolGame,
+    'web-html-1991': HTMLFirstPageGame,
+    'internet-explorer-1995': PopupKillerGame,
+    'google-1998': GoogleSearchGame,
+    'mp3-download-1999': MP3DownloadGame,
+    'geocities-2000': GeoCitiesBuilder,
+    'msn-messenger-2003': MSNNudgeGame,
+    'virus-pop-ups-2004': VirusDefenseGame,
+    'youtube-2005': YouTubeVintageGame,
+    'web2-2010': SocialMediaDashboard,
+    'cloud-ai-2020': AIChatGame
+  };
+
+  // Transformation des événements de la config pour le rendu
+  const events = eventsConfig.map(event => ({
+    ...event,
+    className: `event-${event.year}`,
+    component: componentMap[event.id] || (() => <div>Mini-jeu en développement...</div>),
+    sound: event.media?.sound?.replace('.mp3', '') || 'default-sound'
+  }));
 
   useEffect(() => {
     // Animation d'apparition pour chaque événement au scroll
